@@ -1,0 +1,11 @@
+<!--
+  This view is used to render the installed plugins page.
+-->
+<div>
+  This plug-in reloads automatically and remotely a plug-in on an IBM Content Navigator server. The plug-in
+  jar file needs to be already on the server but it will reload it without stopping the application.
+  This is suitable for development platform, as well as for production platform where you don't
+  want any interruption of service. Although the plug-in's services will be using the new version as
+  soon as you run the task, user will have to reload/refresh their cache to use the last
+  version of all JavaScript files, (or wait 24h hours, default Cache-Control time for ICN).
+</div>
