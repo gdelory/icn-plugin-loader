@@ -289,7 +289,7 @@ public class LoadPluginBuilder extends Builder {
                 JSONObject jsonObj = new JSONObject(json);
                 log.println("JSON conversion OK");
                 JSONArray messages = jsonObj.getJSONArray("messages");
-                log.println("Message returned is:");
+                log.println("Returned message is:");
                 for (int i = 0; i < messages.length(); i++) {
                     log.println(messages.getJSONObject(i).getString("text"));
                 }
