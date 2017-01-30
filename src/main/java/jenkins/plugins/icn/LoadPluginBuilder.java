@@ -48,6 +48,10 @@ public class LoadPluginBuilder extends Builder {
     private String file;
     private String username;
     private String password;
+    private transient String eUrl;
+    private transient String eFile;
+    private transient String eUsername;
+    private transient String ePassword;
     
     // Fields in config.jelly must match the parameter names in the "DataBoundConstructor"
     @DataBoundConstructor
@@ -86,10 +90,10 @@ public class LoadPluginBuilder extends Builder {
         
         // Variable substitution and safety checks
         EnvVars env = build.getEnvironment(listener);
-        file = env.expand(file);
-        username = env.expand(username);
-        password = env.expand(password);
-        url = env.expand(url);
+        eFile = env.expand(file);
+        eUsername = env.expand(username);
+        ePassword = env.expand(password);
+        eUrl = env.expand(url);
         
         // Apply safety checks on variables
         if (!safetyChecks(log)) {
@@ -104,7 +108,7 @@ public class LoadPluginBuilder extends Builder {
                 try {
                     result = save(httpclient, log, loadResult, security_token);
                 } catch (Exception e) {
-                    log.println("ERROR: Exception while realoding plugin: " + e.getMessage());
+                    log.println("ERROR: Exception while reloading the plugin: " + e.getMessage());
                     e.printStackTrace(log);
                 }
             }
@@ -113,12 +117,12 @@ public class LoadPluginBuilder extends Builder {
     }
     
     private boolean safetyChecks(PrintStream log) {
-        if (checkEmpty(file, "file", log)) return false;
-        if (checkEmpty(username, "udername", log)) return false;
-        if (checkEmpty(password, "password", log)) return false;
-        if (checkEmpty(url, "url", log)) return false;
-        if (!url.endsWith("/")) {
-            url += "/";
+        if (checkEmpty(eFile, "file", log)) return false;
+        if (checkEmpty(eUsername, "udername", log)) return false;
+        if (checkEmpty(ePassword, "password", log)) return false;
+        if (checkEmpty(eUrl, "url", log)) return false;
+        if (!eUrl.endsWith("/")) {
+        	eUrl += "/";
         }
         return true;
     }
@@ -143,13 +147,13 @@ public class LoadPluginBuilder extends Builder {
      *         Exception is already logged if <code>null</code> is returned.
      */
     private String logon(HttpClient httpClient, PrintStream log) {
-        log.println("Connecting to ICN as " + username + "...");
+        log.println("Connecting to ICN as " + eUsername + "...");
         
         String res = null;
         
-        PostMethod httpPost = new PostMethod(url + LOGON_URL);
-        httpPost.addParameter(new NameValuePair("userid", username));
-        httpPost.addParameter(new NameValuePair("password", password));
+        PostMethod httpPost = new PostMethod(eUrl + LOGON_URL);
+        httpPost.addParameter(new NameValuePair("userid", eUsername));
+        httpPost.addParameter(new NameValuePair("password", ePassword));
         httpPost.addParameter(new NameValuePair("desktop", DESKTOP));
         String json = null;
         try {
@@ -194,12 +198,12 @@ public class LoadPluginBuilder extends Builder {
      * @return the result of the call, will be needed to save the configuration
      */
     private JSONObject reload(HttpClient httpClient, PrintStream log, String security_token) {
-        log.println("Reloading plugin " + file + "...");
+        log.println("Reloading plugin " + eFile + "...");
         
         JSONObject res = null;
         
-        PostMethod httpPost = new PostMethod(url + LOAD_URL);
-        httpPost.addParameter(new NameValuePair("fileName", file));
+        PostMethod httpPost = new PostMethod(eUrl + LOAD_URL);
+        httpPost.addParameter(new NameValuePair("fileName", eFile));
         httpPost.addParameter(new NameValuePair("desktop", DESKTOP));
 
         httpPost.addRequestHeader("security_token", security_token);
@@ -258,14 +262,14 @@ public class LoadPluginBuilder extends Builder {
         
         boolean res = false;
         
-        PostMethod httpPost = new PostMethod(url + SAVE_URL);
+        PostMethod httpPost = new PostMethod(eUrl + SAVE_URL);
         httpPost.addParameter(new NameValuePair("action", "update"));
         httpPost.addParameter(new NameValuePair("id", loadResult.getString("id")));
         httpPost.addParameter(new NameValuePair("configuration", "PluginConfig"));
         httpPost.addParameter(new NameValuePair("desktop", DESKTOP));
         JSONObject json_post = new JSONObject();
         json_post.put("enabled", true);
-        json_post.put("filename", file);
+        json_post.put("filename", eFile);
         json_post.put("version", loadResult.getString("version"));
         json_post.put("dependencies", new JSONArray());
         json_post.put("name", loadResult.getString("name"));

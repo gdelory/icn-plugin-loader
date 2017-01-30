@@ -8,4 +8,6 @@
   want any interruption of service. Although the plug-in's services will be using the new version as
   soon as you run the task, user will have to reload/refresh their cache to use the last
   version of all JavaScript files, (or wait 24h hours, default Cache-Control time for ICN).
+  This works for an application managed authentication so far, not if you're using an other
+  mechanism (basic, form based, ...)
 </div>
