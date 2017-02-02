@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.jenkins-ci.plugins</groupId>
     <artifactId>plugin</artifactId>
-    <version>1.509.4</version><!-- which version of Jenkins is this plugin built against? -->
+    <version>1.638</version><!-- which version of Jenkins is this plugin built against? -->
   </parent>
 
   <artifactId>icn-plugin-loader</artifactId>
@@ -41,27 +41,6 @@
       <url>http://repo.jenkins-ci.org/public/</url>
     </repository>
   </repositories>
-  
-  <dependencies>
-	<dependency>
-		<groupId>commons-httpclient</groupId>
-		<artifactId>commons-httpclient</artifactId>
-		<version>3.1</version>
-	</dependency>
-
-	<dependency>
-		<groupId>org.json</groupId>
-		<artifactId>json</artifactId>
-		<version>20090211</version>
-	</dependency>
-  </dependencies>
-  
-  <scm>
-    <connection>scm:git:git://github.com/gdelory/icn-plugin-loader.git</connection>
-    <developerConnection>scm:git:git@github.com:gdelory/icn-plugin-loader.git</developerConnection>
-    <url>https://github.com/gdelory/icn-plugin-loader</url>
-    <tag>HEAD</tag>
-  </scm>
 
   <pluginRepositories>
     <pluginRepository>
@@ -69,5 +48,80 @@
       <url>http://repo.jenkins-ci.org/public/</url>
     </pluginRepository>
   </pluginRepositories>
+  
+  <dependencies>
+	<dependency>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpclient</artifactId>
+	    <version>4.5.2</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.json</groupId>
+		<artifactId>json</artifactId>
+		<version>20090211</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-all</artifactId>
+    <version>1.10.19</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.powermock/powermock-core -->
+<dependency>
+    <groupId>org.powermock</groupId>
+    <artifactId>powermock-core</artifactId>
+    <version>1.6.6</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4 -->
+<dependency>
+    <groupId>org.powermock</groupId>
+    <artifactId>powermock-module-junit4</artifactId>
+    <version>1.6.6</version>
+    <scope>test</scope>
+</dependency>
+
+	<dependency>
+    <groupId>org.powermock</groupId>
+    <artifactId>powermock-api-mockito-common</artifactId>     
+    <version>1.6.6</version>
+    <scope>test</scope>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+<dependency>
+    <groupId>org.powermock</groupId>
+    <artifactId>powermock-api-mockito</artifactId>
+    <version>1.6.6</version>
+    <scope>test</scope>
+</dependency>
+
+	
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.10</version>
+            <configuration>
+                <argLine>-Xmx2048m</argLine>
+                <useFile>false</useFile>
+            </configuration>
+        </plugin>
+  	</plugins>
+  </build>
+  
+  <scm>
+    <connection>scm:git:git://github.com/gdelory/icn-plugin-loader.git</connection>
+    <developerConnection>scm:git:git@github.com:gdelory/icn-plugin-loader.git</developerConnection>
+    <url>https://github.com/gdelory/icn-plugin-loader</url>
+    <tag>HEAD</tag>
+  </scm>
 
 </project>
