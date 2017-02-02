@@ -30,7 +30,7 @@ import org.kohsuke.stapler.QueryParameter;
  * Implementation of a {@link Builder} step to refresh an ICN plug-in.
  * 
  * @author Guillaume Delory
- * @date Jan 30, 2017
+ * Date:   Jan 30, 2017
  * 
  *
  */
@@ -343,8 +343,7 @@ public class LoadPluginBuilder extends Builder {
          * @return
          *      Indicates the outcome of the validation. This is sent to the browser.
          */
-        public FormValidation doCheckUrl(@QueryParameter String value)
-                throws IOException, ServletException {
+        public FormValidation doCheckUrl(@QueryParameter String value) {
             if (value.length() == 0)
                 return FormValidation.error("Please set a URL");
             if (!value.endsWith("/") && value.startsWith("http"))
